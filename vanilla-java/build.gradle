@@ -10,14 +10,7 @@ repositories {
 }
 
 dependencies {
-    implementation platform('software.amazon.awssdk:bom:2.20.97')
+    implementation platform('software.amazon.awssdk:bom:2.20.115')
     implementation 'software.amazon.awssdk:sqs'
     implementation 'software.amazon.awssdk:s3'
-
-    testImplementation platform('org.junit:junit-bom:5.9.1')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-}
-
-test {
-    useJUnitPlatform()
 }
