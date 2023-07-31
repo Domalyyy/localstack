@@ -13,10 +13,6 @@ B
 spring/gradlew.bat,a/1/a1f7b80eb2367e5236f5b50deef6cd2a3a076656
 F
 spring/settings.gradle,c/9/c90f48ac170bc994e537566768fffc7daa86103d
-g
-7spring/src/main/java/org/vitech/spring/Application.java,f/5/f50b1e399953925ad0f3fa08a9277deff6df5ab9
-A
-terraform/main.tf,5/f/5fcd445cc6ee7e8d89c54344f6629e6231463191
 M
 terraform/.terraform.lock.hcl,4/d/4d15f46e7116f9c08da6be838d080fe094bc5007
 :
