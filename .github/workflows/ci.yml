@@ -10,20 +10,4 @@ permissions:
   contents: read
 
 jobs:
-  localstack:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Start LocalStack
-        run: |
-          pip install localstack awscli-local[ver1]
-          docker pull localstack/localstack        
-          localstack start -d                      
-          
-          echo "Waiting for LocalStack startup..." 
-          localstack wait -t 30                    
-          echo "Startup complete"
-      - name: Run some Tests against LocalStack
-        run: |
-          awslocal s3 mb s3://test
-          awslocal s3 ls
-          echo "Test Execution complete!"
+  job:
