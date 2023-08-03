@@ -24,7 +24,9 @@ jobs:
 #          configuration: DEBUG=1
 
       - name: Create resources
-        run: ./init-aws.sh
+        run: |
+          chmod +x init-aws.sh
+          ./init-aws.sh
 #      - name: Setup Terraform
 #        uses: hashicorp/setup-terraform@v1
 #        with:
