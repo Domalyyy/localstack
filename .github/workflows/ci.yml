@@ -6,9 +6,6 @@ on:
   pull_request:
     branches: [ "main" ]
 
-permissions:
-  contents: read
-
 jobs:
   localstack:
     name: 'LocalStack'
@@ -42,11 +39,6 @@ jobs:
         working-directory: core-java
         run: ./gradlew build
 
-      - name: Create resources
-        run: |
-          chmod +x init-aws.sh
-          ./init-aws.sh
-
       - name: Publish lambda to S3
         run: awslocal s3 cp core-java/build/distributions/core-java-1.0-SNAPSHOT.zip s3://lambda/core-java-1.0-SNAPSHOT.zip
 
@@ -57,11 +49,6 @@ jobs:
 
       - name: Terraform-local installation
         run: pip3 install terraform-local
-
-      - name: Configure aws credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-region: us-east-2
 
       - name: Terraform-local Plan and apply changes
         working-directory: terraform
