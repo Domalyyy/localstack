@@ -16,43 +16,41 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-#      - name: Start LocalStack
-#        uses: LocalStack/setup-localstack@v0.1.2
-#        with:
-#          image-tag: '2.2.0'
-#          install-awslocal: 'true'
-#          configuration: DEBUG=1
+      - name: Start LocalStack
+        uses: LocalStack/setup-localstack@v0.1.2
+        with:
+          image-tag: '2.2.0'
+          install-awslocal: 'true'
+          configuration: DEBUG=1
 
       - name: Create resources
         run: |
           chmod +x init-aws.sh
           ./init-aws.sh
-#      - name: Setup Terraform
-#        uses: hashicorp/setup-terraform@v1
-#        with:
-#          terraform_version: 1.2.5
-#      - name: Terraform-local installation
-#        run: |
-#          pip3 install terraform-local
-#      - name: configure aws credentials
-#        uses: aws-actions/configure-aws-credentials@v1
-#        with:
-#          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
-#          role-duration-seconds: 900 # the ttl of the session, in seconds.
-#          aws-region: ${{ secrets.AWS_REGION }}
-#      - name: Terraform-local Plan and apply changes
-#        run: |
-#          export TF_CLI_ARGS_plan="-compact-warnings"
-#          export TF_CLI_ARGS_apply="-compact-warnings"
-#          tflocal init -backend-config=./terraform-config/localstack/backend.tf
-#          tflocal validate
-#          tflocal plan -input=false -no-color
-#          tflocal apply -auto-approve
-#      - name: ACTUAL Terraform Plan and apply changes
-#        run: |
-#          export TF_CLI_ARGS_plan="-compact-warnings"
-#          export TF_CLI_ARGS_apply="-compact-warnings"
-#          terraform init -reconfigure -backend-config=./terraform-config/aws/backend.tf
-#          terraform validate
-#          terraform plan -input=false -no-color
-#          terraform apply -auto-approve
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.2.5
+      - name: Terraform-local installation
+        run: |
+          pip3 install terraform-local
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: us-east-2
+      - name: Terraform-local Plan and apply changes
+        run: |
+          export TF_CLI_ARGS_plan="-compact-warnings"
+          export TF_CLI_ARGS_apply="-compact-warnings"
+          tflocal init -backend-config=./terraform-config/localstack/backend.tf
+          tflocal validate
+          tflocal plan -input=false -no-color
+          tflocal apply -auto-approve
+      - name: ACTUAL Terraform Plan and apply changes
+        run: |
+          export TF_CLI_ARGS_plan="-compact-warnings"
+          export TF_CLI_ARGS_apply="-compact-warnings"
+          terraform init -reconfigure -backend-config=./terraform-config/aws/backend.tf
+          terraform validate
+          terraform plan -input=false -no-color
+          terraform apply -auto-approve
