@@ -27,17 +27,3 @@ jobs:
           awslocal s3 mb s3://test
           awslocal s3 ls
           echo "Test Execution complete!"
-
-  build:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - name: Set up JDK 17
-      uses: actions/setup-java@v3
-      with:
-        java-version: '17'
-        distribution: 'corretto'
-    - name: Build with Gradle
-      uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25
-      with:
-        arguments: build

@@ -22,33 +22,10 @@ repositories {
     mavenCentral()
 }
 
-ext {
-    set('awssdkVersion', '2.20.115')
-    set('springcloudVersion', '3.0.1')
-    set('testcontainersVersion', '1.18.3')
-}
-
-dependencyManagement {
-    imports {
-        mavenBom "software.amazon.awssdk:bom:${awssdkVersion}"
-        mavenBom "io.awspring.cloud:spring-cloud-aws-dependencies:${springcloudVersion}"
-        mavenBom "org.testcontainers:testcontainers-bom:${testcontainersVersion}"
-    }
-}
-
 dependencies {
-    // AWS
-    implementation 'software.amazon.awssdk:sqs'
-    implementation 'software.amazon.awssdk:s3'
-
-    // Spring
     implementation 'org.springframework.boot:spring-boot-starter'
 
-    // Tests
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.testcontainers:junit-jupiter'
-    testImplementation 'org.testcontainers:localstack'
-    testImplementation 'org.testcontainers:postgresql'
     testImplementation 'org.mockito:mockito-junit-jupiter:5.4.0'
     testImplementation 'org.mockito:mockito-inline:5.2.0'
 
@@ -60,4 +37,22 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+tasks.register('buildZip', Zip) {
+    from compileJava
+    from processResources
+    into('lib') {
+        from configurations.runtimeClasspath
+    }
+}
+
+build.dependsOn buildZip
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'org.vitech.spring.Application'
+        )
+    }
 }

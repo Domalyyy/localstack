@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+}
+
+group = 'org.vitech'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+}
+
+tasks.register('buildZip', Zip) {
+    from compileJava
+    from processResources
+    into('lib') {
+        from configurations.runtimeClasspath
+    }
+}
+
+build.dependsOn buildZip
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'org.vitech.Handler'
+        )
+    }
+}

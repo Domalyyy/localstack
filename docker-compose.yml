@@ -3,11 +3,14 @@ version: '3.9'
 services:
   localstack:
     container_name: localstack
-    image: localstack/localstack:2.1
+    image: localstack/localstack:2.2.0
+    network_mode: bridge
     ports:
       - "4566:4566"
     environment:
-      - AWS_DEFAULT_REGION=us-east-1
+      - LAMBDA_DOCKER_NETWORK=bridge
+      - AWS_DEFAULT_REGION=us-east-2
+      - DEBUG=1
       - DOCKER_HOST=unix:///var/run/docker.sock
     volumes:
       - ./init-aws.sh:/etc/localstack/init/ready.d/init-aws.sh

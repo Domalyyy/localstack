@@ -4,18 +4,18 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <option name="externalProjectPath" value="$PROJECT_DIR$/spring" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/core-java" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/spring" />
+            <option value="$PROJECT_DIR$/core-java" />
           </set>
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
-        <option name="externalProjectPath" value="$PROJECT_DIR$/vanilla-java" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/spring" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/vanilla-java" />
+            <option value="$PROJECT_DIR$/spring" />
           </set>
         </option>
       </GradleProjectSettings>
