@@ -1,10 +1,10 @@
-resource "aws_lambda_function" "local_lambda" {
-  function_name = "core-java"
+resource "aws_lambda_function" "core-java" {
+  function_name = "local"
   s3_bucket     = "lambda"
   s3_key        = "core-java-1.0-SNAPSHOT.zip"
   handler       = "org.vitech.Handler"
   runtime       = "java17"
-  role          = aws_iam_role.lambda_exec.arn
+  role          = aws_iam_role.execution.arn
 
   environment {
     variables = {
@@ -13,8 +13,8 @@ resource "aws_lambda_function" "local_lambda" {
   }
 }
 
-resource "aws_iam_role" "lambda_exec" {
-  name = "local_lambda"
+resource "aws_iam_role" "execution" {
+  name = "core-java"
 
   assume_role_policy = <<EOF
 {
@@ -56,7 +56,7 @@ resource "aws_api_gateway_integration" "lambda" {
   http_method             = aws_api_gateway_method.proxy.http_method
   integration_http_method = "POST"
   type                    = "AWS_PROXY"
-  uri                     = aws_lambda_function.local_lambda.invoke_arn
+  uri                     = aws_lambda_function.core-java.invoke_arn
 }
 
 resource "aws_api_gateway_method" "proxy_root" {
@@ -67,13 +67,12 @@ resource "aws_api_gateway_method" "proxy_root" {
 }
 
 resource "aws_api_gateway_integration" "lambda_root" {
-  rest_api_id = aws_api_gateway_rest_api.person.id
-  resource_id = aws_api_gateway_method.proxy_root.resource_id
-  http_method = aws_api_gateway_method.proxy_root.http_method
-
+  rest_api_id             = aws_api_gateway_rest_api.person.id
+  resource_id             = aws_api_gateway_method.proxy_root.resource_id
+  http_method             = aws_api_gateway_method.proxy_root.http_method
   integration_http_method = "POST"
   type                    = "AWS_PROXY"
-  uri                     = aws_lambda_function.local_lambda.invoke_arn
+  uri                     = aws_lambda_function.core-java.invoke_arn
 }
 
 resource "aws_api_gateway_deployment" "person" {
@@ -86,15 +85,10 @@ resource "aws_api_gateway_deployment" "person" {
   stage_name  = "person"
 }
 
-resource "aws_lambda_permission" "apigw" {
+resource "aws_lambda_permission" "core-java" {
   statement_id  = "AllowAPIGatewayInvoke"
   action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.local_lambda.function_name
+  function_name = aws_lambda_function.core-java.function_name
   principal     = "apigateway.amazonaws.com"
-
-  source_arn = "${aws_api_gateway_rest_api.person.execution_arn}/*/*"
-}
-
-output "base_url" {
-  value = aws_api_gateway_deployment.person.invoke_url
+  source_arn    = "${aws_api_gateway_rest_api.person.execution_arn}/*/*"
 }

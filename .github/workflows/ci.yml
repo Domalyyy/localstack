@@ -8,3 +8,52 @@ on:
 
 jobs:
   localstack:
+    name: 'LocalStack'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Start LocalStack
+        uses: LocalStack/setup-localstack@v0.1.2
+        with:
+          image-tag: '2.2.0'
+          install-awslocal: 'true'
+          configuration: DEBUG=1
+
+      - name: Create resources
+        run: |
+          chmod +x init-aws.sh
+          ./init-aws.sh
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'corretto'
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+
+      - name: Execute Gradle build
+        working-directory: core-java
+        run: ./gradlew build
+
+      - name: Publish lambda to S3
+        run: awslocal s3 cp core-java/build/distributions/core-java-1.0-SNAPSHOT.zip s3://lambda/core-java-1.0-SNAPSHOT.zip
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.2.5
+
+      - name: Terraform-local installation
+        run: pip3 install terraform-local
+
+      - name: Terraform-local Plan and apply changes
+        working-directory: terraform
+        run: |
+          export TF_CLI_ARGS_plan="-compact-warnings"
+          export TF_CLI_ARGS_apply="-compact-warnings"
+          tflocal init
+          tflocal apply -auto-approve
