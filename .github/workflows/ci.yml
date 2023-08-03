@@ -10,4 +10,19 @@ permissions:
   contents: read
 
 jobs:
-  job:
+  localstack:
+    name: 'LocalStack'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Start LocalStack
+        uses: LocalStack/setup-localstack@v0.1.2
+        with:
+          image-tag: '2.2.0'
+          install-awslocal: 'true'
+          configuration: DEBUG=1
+
+      - name: Create resources
+        run: init-aws.sh
+        shell: bash
