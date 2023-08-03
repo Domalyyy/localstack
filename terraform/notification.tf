@@ -7,7 +7,7 @@ resource "aws_sqs_queue" "local_queue" {
   visibility_timeout_seconds = 30
   delay_seconds              = 90
   max_message_size           = 262144
-  message_retention_seconds  = 5
+  message_retention_seconds  = 60
   receive_wait_time_seconds  = 10
 
   redrive_policy = jsonencode({
