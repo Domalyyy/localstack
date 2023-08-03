@@ -41,21 +41,3 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
-
-tasks.register('buildZip', Zip) {
-    from compileJava
-    from processResources
-    into('lib') {
-        from configurations.runtimeClasspath
-    }
-}
-
-build.dependsOn buildZip
-
-jar {
-    manifest {
-        attributes(
-                'Main-Class': 'org.vitech.spring.Application'
-        )
-    }
-}
