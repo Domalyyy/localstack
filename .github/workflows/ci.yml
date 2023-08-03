@@ -24,5 +24,4 @@ jobs:
           configuration: DEBUG=1
 
       - name: Create resources
-        run: init-aws.sh
-        shell: bash
+        run: ./init-aws.sh

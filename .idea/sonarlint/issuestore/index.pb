@@ -41,8 +41,6 @@ I
 .core-java/src/main/.aws-sam/temp-template.yaml,7/7/77d1dc6485689c0c3074224185b0f2af30736ec6
 _
 /core-java/src/main/.aws-sam/build/template.yaml,b/a/ba4aa33db17c028b617c94991f9551317e8ce018
-;
-init-aws.sh,5/9/592ab85699a6b6fc744d74643dd02f5ce675cc02
 B
 docker-compose.yml,3/5/35b8c13cf2eb2a194eada000eb310d65aed53b2a
 z

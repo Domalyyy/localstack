@@ -17,8 +17,6 @@ mspring/build/generated/aotTestSources/org/vitech/spring/ApplicationTests__TestC
 Q.idea/sonarlint/securityhotspotstore/a/1/a1f7b80eb2367e5236f5b50deef6cd2a3a076656,a/4/a4a4efa2bae8354ffdbe84d9cb302da22817bfc9
 Å
 Q.idea/sonarlint/securityhotspotstore/a/1/a1292b9b9ca7bc8b4b46d5b8a68e1297a9e62f6e,7/1/718509c996c6a755b09e3f7e65b7e7d812b48fac
-;
-init-aws.sh,5/9/592ab85699a6b6fc744d74643dd02f5ce675cc02
 ^
 .core-java/src/main/java/org/vitech/Person.java,3/f/3f1aa7003419323c5f157706706b1a3a1ddf47f4
 b
